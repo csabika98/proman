@@ -11,7 +11,7 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    return "Hello röfik"
+    return render_template("index.html")
 
 
 @app.route("/get-boards")
