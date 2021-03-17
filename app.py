@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for
 from util import json_response
-
+import postgres_query as query
 import data_handler
 
 app = Flask(__name__)
@@ -11,7 +11,10 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    return render_template("design.html")
+    accounts = query.select_accounts()
+    '''test query'''
+    
+    return render_template("design.html", accounts=accounts)
 
 
 @app.route("/get-boards")
