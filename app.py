@@ -5,13 +5,12 @@ import data_handler
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET'])
+@app.route("/")
 def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    boards = request.get_json()
-    return render_template("index.html",boards=boards)
+    return render_template("index.html")
 
 
 @app.route("/get-boards")

@@ -14,7 +14,22 @@ export let dom = {
     showBoards: function (boards) {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
-        
+        let boardList = '';
+
+        for(let board of boards){
+            boardList += `
+                <li>${board.title}</li>
+            `;
+        }
+
+        const outerHtml = `
+            <ul class="board-container">
+                ${boardList}
+            </ul>
+        `;
+
+        let boardsContainer = document.querySelector('#boards');
+        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
         dataHandler.getCardsByBoardId(boardId,function(cards){
