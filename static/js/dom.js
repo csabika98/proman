@@ -15,22 +15,24 @@ export let dom = {
         // shows boards appending them to #boards div
         // it adds necessary event listeners also
 
-        let boardList = '';
+        let containter = document.createElement('div')
+        containter.classList.add('container')
 
         for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
-            `;
+            let row = document.createElement('div')
+            row.classList.add('row');
+
+            let panel = document.createElement('section')
+            panel.classList.add("card-panel");
+            panel.textContent = board.title;
+
+            let boardsContainer = document.querySelector('#boards');
+            boardsContainer.classList.add('container')
+            row.append(panel);
+            boardsContainer.append(row);
+
         }
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
-
-        let boardsContainer = document.querySelector('#boards');
-        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
