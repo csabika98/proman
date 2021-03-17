@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -24,16 +24,18 @@
     <div class="d-flex justify-content-evenly" id="alert">
         <div class="alert alert-success" role="alert">{{messages[0]}}</div>
     </div>
-    {% endif %}
-    {% endwith %}
-    {%if session["email"] is defined%}
-    {{"Welcome!  " + session["email"]}}
-    <button onclick="window.location.href='/login'">Logout</button>
-    {% else %}
-    <button onclick="window.location.href='/login'">Login</button>
-    <button onclick="window.location.href='/register'">Register</button>
     {%endif%}
-        <h1>ProMan</h1>
-        <div id="boards">Boards are loading...</div>
+    {%endwith%}
+   <form action="/login" method="post"><br>
+    <label for="email">Email</label><br>
+    <input type="text" id="email" name="email"><br>
+    <label for="password">Password</label><br>
+    <input type="password" id="password" name="password"><br>
+    <button type="submit">Log in</button></form>
+    <form method="get" action="/register">
+    <button type="submit">Register</button>
+    </form>
+    <h1>ProMan</h1>
+          <div id="boards">Boards are loading...</div>
     </body>
 </html>

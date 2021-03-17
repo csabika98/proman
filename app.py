@@ -1,10 +1,55 @@
-from flask import Flask, render_template, url_for, request
+from logging import error
+from flask import Flask, render_template, url_for, request, session, flash
+from werkzeug.utils import redirect
 from util import json_response
 import data_manager as d
 import data_handler
 import datetime
 
 app = Flask(__name__)
+app.secret_key = "valami" 
+
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        session.pop("email", None)
+        session.pop("password",None)
+        paswd = request.form["password"]
+        email_address = request.form["email"]
+        user = d.get_user_by_email_and_pass(email_address, paswd)
+        password = ''
+        for _ in user:
+            password = _["password"]
+        if user and request.form['password'] and password:
+            for _ in user:
+                session['password'] = _['password']
+                session["email"] = _["email"]
+            return redirect("/")
+        else:
+            flash("Login failed: Wrong password or email","red")
+            return redirect("/")
+    return render_template("login.html") 
+
+@app.route("/register", methods=["GET","POST"])
+def register():
+    session.pop("email",None)
+    if request.method == "POST": #register system
+        password = request.form["password"]
+        email = request.form["email"]
+        created_on = datetime.datetime.now().strftime("%d-%B-%Y %H:%M:%S")
+        d.register_user(password, email, created_on)
+    return render_template("register.html", session=session)
+
+
+
+@app.route('/logout', methods=["GET","POST"])
+def logout():
+    session.pop('email',None)
+    session.pop("password", None)
+    flash("You have been successfully logged out!","green")
+    return redirect("/")
 
 
 @app.route("/", methods=["GET","POST"])
@@ -12,12 +57,7 @@ def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    if request.method == "POST":
-        password = request.form["password"]
-        email = request.form["email"]
-        created_on = datetime.datetime.now().strftime("%d-%B-%Y %H:%M:%S")
-        d.register_user(password, email, created_on)
-    return render_template("index.html")
+    return render_template("index.html", session=session)
 
 
 @app.route("/get-boards")
