@@ -16,7 +16,7 @@ def get_accounts(cursor: RealDictCursor) -> list:
 
 
 @database_common.connection_handler
-def register_user(cursor:RealDictCursor,password:str, email:str, created_on:str) -> list:
+def register_new_user(cursor:RealDictCursor,password:str, email:str, created_on:str) -> list:
     cursor.execute("""INSERT INTO accounts (password, email, created_on) VALUES (%s,%s,%s)""",(password, email, created_on))
 
 @database_common.connection_handler

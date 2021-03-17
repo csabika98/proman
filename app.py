@@ -32,14 +32,17 @@ def login():
             return redirect("/")
     return render_template("login.html") 
 
-@app.route("/register", methods=["GET","POST"])
-def register():
+
+
+@app.route("/register", methods=["POST", "GET"])
+def register_new_account():
     session.pop("email",None)
-    if request.method == "POST": #register system
+    if request.method == "POST": 
         password = request.form["password"]
         email = request.form["email"]
         created_on = datetime.datetime.now().strftime("%d-%B-%Y %H:%M:%S")
-        d.register_user(password, email, created_on)
+        d.register_new_user(password, email, created_on)
+        return redirect("/")
     return render_template("register.html", session=session)
 
 
