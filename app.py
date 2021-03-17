@@ -1,18 +1,23 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from util import json_response
 import data_manager as d
 import data_handler
+import datetime
 
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    accounts = d.get_accounts()
-    return render_template("index.html", accounts=accounts)
+    if request.method == "POST":
+        password = request.form["password"]
+        email = request.form["email"]
+        created_on = datetime.datetime.now().strftime("%d-%B-%Y %H:%M:%S")
+        d.register_user(password, email, created_on)
+    return render_template("index.html")
 
 
 @app.route("/get-boards")
