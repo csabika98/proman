@@ -1,17 +1,17 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for,request
 from util import json_response
 
 import data_handler
 
 app = Flask(__name__)
 
-
-@app.route("/")
+@app.route("/", methods=['GET'])
 def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    return render_template("design.html")
+    boards = request.get_json()
+    return render_template("index.html",boards=boards)
 
 
 @app.route("/get-boards")
