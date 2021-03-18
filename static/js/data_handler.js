@@ -20,6 +20,26 @@ export let dataHandler = {
         // it is not called from outside
         // sends the data to the API, and calls callback function
     },
+
+     _api_post_: async function(url, data) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      },
+
     init: function () {
     },
     getBoards: function (callback) {
@@ -37,13 +57,23 @@ export let dataHandler = {
         // the board is retrieved and then the callback function is called with the board
     },
     getStatuses: function (callback) {
-        // the statuses are retrieved and then the callback function is called with the statuses
+        this._api_get('/get-statuses', (response) => {
+            this._data['statuses'] = response;
+            callback(response);
+        });
     },
     getStatus: function (statusId, callback) {
         // the status is retrieved and then the callback function is called with the status
     },
     getCardsByBoardId: function (boardId,callback) {
         this._api_get(`/get-cards/${boardId}`, (response) => {
+            this._data['cards'] = response;
+            callback(response);
+        });
+    },
+
+    getAllCards: function (callback) {
+        this._api_get('/get-cards', (response) => {
             this._data['cards'] = response;
             callback(response);
         });
