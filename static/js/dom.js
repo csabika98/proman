@@ -85,35 +85,95 @@ export let dom = {
             for(let card of cards){
                 if(board.id == card.board_id){
                     if(card.status_id==0){
-                        let cardDiv = document.createElement('div')
+                        let cardDiv = document.createElement('li')
                         cardDiv.classList.add('card')
                         cardDiv.id = 'interactiveCard'
                         cardDiv.append(card.title)
-                        $(cardDiv).attr('contenteditable','true');
+
+                        $(cardDiv).draggable({
+                            snap: true,
+                            helper: 'clone',
+                            zIndex: 1000,
+                            revert: "invalid",
+                            containment:"document"
+                        });
+                        
+                        $('ul[name="dropable"]').droppable({
+                            drop:function(event, ui) {
+                                ui.draggable.detach().appendTo($(this));
+                            }
+                        });
+
+                        //$(cardDiv).attr('contenteditable','true');
                         newStatus.append(cardDiv)
                     }
                     else if(card.status_id==1){
-                        let cardDiv = document.createElement('div')
+                        let cardDiv = document.createElement('li')
                         cardDiv.classList.add('card')
                         cardDiv.id = 'interactiveCard'
                         cardDiv.append(card.title)
-                        $(cardDiv).attr('contenteditable','true');
+
+                        $(cardDiv).draggable({
+                            snap: true,
+                            helper: 'clone',
+                            zIndex: 1000,
+                            revert: "invalid",
+                            containment:"document"
+                        });
+                        
+                        $('ul[name="dropable"]').droppable({
+                            drop:function(event, ui) {
+                                ui.draggable.detach().appendTo($(this));
+                            }
+                        });
+
+                        //$(cardDiv).attr('contenteditable','true');
                         progressStatus.append(cardDiv)
                     }
                     else if(card.status_id==2){
-                        let cardDiv = document.createElement('div')
+                        let cardDiv = document.createElement('li')
                         cardDiv.classList.add('card')
                         cardDiv.id = 'interactiveCard'
                         cardDiv.append(card.title)
-                        $(cardDiv).attr('contenteditable','true');
+
+                        $(cardDiv).draggable({
+                            snap: true,
+                            helper: 'clone',
+                            zIndex: 1000,
+                            revert: "invalid",
+                            containment:"document"
+                        });
+                        
+                        $('ul[name="dropable"]').droppable({
+                            drop:function(event, ui) {
+                                ui.draggable.detach().appendTo($(this));
+                            }
+                        });
+                    
+                        //$(cardDiv).attr('contenteditable','true');
                         testingStatus.append(cardDiv)
                     }
                     else if(card.status_id==3){
-                        let cardDiv = document.createElement('div')
+                        let cardDiv = document.createElement('li')
                         cardDiv.classList.add('card')
                         cardDiv.id = 'interactiveCard'
                         cardDiv.append(card.title)
-                        $(cardDiv).attr('contenteditable','true');
+
+                        $(cardDiv).draggable({
+                            snap: true,
+                            helper: 'clone',
+                            zIndex: 1000,
+                            revert: "invalid",
+                            containment:"document"
+                        });
+                        
+                        $('ul[name="dropable"]').droppable({
+                            drop:function(event, ui) {
+                                ui.draggable.detach().appendTo($(this));
+                            }
+                        });
+
+                        //$(cardDiv).attr('contenteditable','true');
                         doneStatus.append(cardDiv)
                     }
                 }
@@ -139,10 +199,12 @@ export let dom = {
 
         for(let card of cardContent){
             for(let i=0;i<status.length;i++){
-                let stat = document.createElement('div')
+                let stat = document.createElement('ul')
                 stat.classList.add('col', 'card', 'text-center')
                 stat.textContent = statusNames[i]
+                stat.setAttribute('name','dropable')
                 stat.id = status[i]['title']
+
                 card.append(stat)
             }
         }
