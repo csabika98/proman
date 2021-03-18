@@ -25,26 +25,27 @@ export let dom = {
             let addButton = document.createElement('button')
             let minimizeButton = document.createElement('button')
             let title = document.createElement('div')
+            let title_and_butttonDiv = document.createElement('div')
             let Icon = document.createElement('i')
             let boardpanel = document.createElement('div')
             let header = document.createElement('div')
             let body = document.createElement('div')
             let bodyContent = document.createElement('div')
+
             
             bodyContent.classList.add('row')
 
             Icon.classList.add('fas','fa-caret-down')
             addButton.classList.add('btn','btn-primary', 'btn-sm')
             minimizeButton.classList.add('btn','btn-primary', 'btn-sm')
-
             addButton.textContent = 'Add card'
+            addButton.setAttribute('data-board', board.id)
             bodyContent.id = 'cardContent'
             body.classList.add('card-body')
             header.classList.add('card-header', 'd-flex', 'justify-content-between')
             boardpanel.classList.add('card')
             
             title.textContent = board.title
-            body.id = 'collapse' + board.id
             minimizeButton.append(Icon)
             header.setAttribute('id','header')
             title.setAttribute('contenteditable', true)
@@ -56,14 +57,6 @@ export let dom = {
             header.append(title,addButton,minimizeButton)
             boardpanel.append(header,body)
             container.append(boardpanel)
-            
-            //add event listener to each minimize button
-            jQuery(document).ready(function(){
-                jQuery(minimizeButton).on('click', function(event) {        
-                    jQuery(body).slideToggle('show');
-                });
-            });
-
             }
 
         let boardsContainer = document.querySelector('#boards');

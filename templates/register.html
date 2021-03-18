@@ -33,7 +33,7 @@
     {% endwith %}
     {%if session["email"] is defined%}
     {{"Welcome!  " + session["email"]}}
-    <button onclick="window.location.href='/login'">Logout</button>
+    <button onclick="window.location.href='/logout'">Logout</button>
     {% else %}
     <div class="container-fluid">
 		<div class="row main-content bg-success text-center">
