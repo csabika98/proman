@@ -36,7 +36,7 @@ def createnewcard():
         return redirect("/")
     return render_template("index.html", list_cards=list_cards, board_ids=board_ids)
 
-
+# add new board
 @app.route("/new-board/", methods=["GET","POST"])
 def createnewboard():
     list_boards = p.show_boards()
