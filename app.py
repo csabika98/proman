@@ -56,7 +56,7 @@ def createnewboard():
     return render_template("index.html")
 
 
-
+# login system
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
