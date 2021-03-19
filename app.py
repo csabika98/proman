@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = "valami" 
 
 
-
+# add new card 
 @app.route("/new-card/", methods=["GET","POST"])
 def createnewcard():
     list_cards = p.show_cards()
