@@ -12,4 +12,4 @@ id,board_id,title,status_id,order
 11,2,done card 1,3,0
 12,2,done card 1,3,1
 10,1,newnew111,0,0
-
+10,1,newlycreatedcard,0,0

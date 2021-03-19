@@ -14,22 +14,22 @@ app.secret_key = "valami"
 
 @app.route("/new-card/", methods=["GET","POST"])
 def createnewcard():
-    list_questions = p.show_cards()
+    list_cards = p.show_cards()
     ids = []
-    for add_questions in list_questions:
-        ids.append(add_questions["id"])
-    new_questions = {}
+    for add_cards in list_cards:
+        ids.append(add_cards["id"])
+    new_cards = {}
     if request.method == "POST":
         if len(ids) == 0:
-            new_questions["id"] = "0"
+            new_cards["id"] = "0"
         else:
-            new_questions["id"] = str(int(max(ids)) + 1)
-        new_questions['board_id'] = 1
-        new_questions["title"] = "newlycreatedcard"
-        new_questions["status_id"] = 0
-        new_questions["order"] = 0
-        list_questions.append(new_questions)
-        p.write_to_file(list_questions)
+            new_cards["id"] = str(int(max(ids)) + 1)
+        new_cards['board_id'] = 1
+        new_cards["title"] = "newlycreatedcard"
+        new_cards["status_id"] = 0
+        new_cards["order"] = 0
+        list_cards.append(new_cards)
+        p.write_to_file(list_cards)
         return redirect("/")
     return render_template("index.html")
 
