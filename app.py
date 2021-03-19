@@ -34,6 +34,23 @@ def createnewcard():
     return render_template("index.html")
 
 
+@app.route("/new-board/", methods=["GET","POST"])
+def createnewboard():
+    list_boards = p.show_boards()
+    ids = []
+    for add_boards in list_boards:
+        ids.append(add_boards["id"])
+    new_boards = {}
+    if request.method == "POST":
+        if len(ids) == 0:
+            new_boards["id"] = "0"
+        else:
+            new_boards["id"] = str(int(max(ids)) + 1)
+        new_boards['title'] = "Newly created board"
+        list_boards.append(new_boards)
+        p.write_to_boards(list_boards)
+        return redirect("/")
+    return render_template("index.html")
 
 
 

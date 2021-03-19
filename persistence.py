@@ -4,6 +4,7 @@ STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
 CARDS_FILE = './data/cards.csv'
 DATA_HEADER = ["id","board_id","title","status_id","order"]
+DATA_HEADER2=["id","title"]
 _cache = {}  # We store cached data in this dict to avoid multiple file readings
 
 
@@ -58,8 +59,25 @@ def write_to_file(datafile):
             writer.writerows(datafile)
 
 
+def write_to_boards(datafile):
+        with open(BOARDS_FILE, "w") as csvfile:
+            writer = csv.DictWriter(csvfile,fieldnames=DATA_HEADER2)
+            writer.writeheader()
+            writer.writerows(datafile)
+
+
 def show_cards():
     with open(CARDS_FILE) as csvfile:
+        result = []
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            new = dict(row)
+            result.append(new)
+        return result
+
+
+def show_boards():
+    with open(BOARDS_FILE) as csvfile:
         result = []
         reader = csv.DictReader(csvfile)
         for row in reader:
