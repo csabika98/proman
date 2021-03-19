@@ -40,9 +40,11 @@
     {% endif %}
     {% endwith %}
     {%if session["email"] is defined%}
-    {{"Welcome!  " + session["email"]}}
-    <nav class="nav">
+
+    <div style="text-align:center;">{{"Welcome!  " + session["email"]}}
         <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+    </div>
+    <nav class="nav">
     </nav>
     {% else %}
     <nav class="nav justify-content-center">
