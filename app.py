@@ -15,6 +15,9 @@ app.secret_key = "valami"
 @app.route("/new-card/", methods=["GET","POST"])
 def createnewcard():
     list_cards = p.show_cards()
+    board_ids = []
+    for board_id in list_cards:
+        board_ids.append(board_id["board_id"])
     ids = []
     for add_cards in list_cards:
         ids.append(add_cards["id"])
@@ -31,7 +34,7 @@ def createnewcard():
         list_cards.append(new_cards)
         p.write_to_file(list_cards)
         return redirect("/")
-    return render_template("index.html")
+    return render_template("index.html", list_cards=list_cards, board_ids=board_ids)
 
 
 @app.route("/new-board/", methods=["GET","POST"])
