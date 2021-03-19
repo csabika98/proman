@@ -3,7 +3,7 @@ import csv
 STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
 CARDS_FILE = './data/cards.csv'
-
+DATA_HEADER = ["id","board_id","title","status_id","order"]
 _cache = {}  # We store cached data in this dict to avoid multiple file readings
 
 
@@ -49,3 +49,20 @@ def get_boards(force=False):
 
 def get_cards(force=False):
     return _get_data('cards', CARDS_FILE, force)
+
+
+def write_to_file(datafile):
+        with open(CARDS_FILE, "w") as csvfile:
+            writer = csv.DictWriter(csvfile,fieldnames=DATA_HEADER)
+            writer.writeheader()
+            writer.writerows(datafile)
+
+
+def show_cards():
+    with open(CARDS_FILE) as csvfile:
+        result = []
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            new = dict(row)
+            result.append(new)
+        return result

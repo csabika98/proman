@@ -50,6 +50,9 @@
         <a class="nav-link" href="/register">Register</a>
     </nav>
     {%endif%}
+    {
+    <form action="/new-card/{{board_id}}" style="text-align: center;" method="POST"><button class="btn btn-primary btn sm" type="submit" id = "addcard" name="addcard">Create new card</button></form>
+ 
         <div id="boards"></div>
     </body>
 </html>

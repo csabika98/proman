@@ -22,7 +22,7 @@ export let dom = {
         //create the empty boards with clean structure and branching
         for(let board of boards){
             //console.log('board id: ' + board.id)
-            let addButton = document.createElement('button')
+            //let addButton = document.createElement('button')
             let minimizeButton = document.createElement('button')
             let title = document.createElement('div')
             let title_and_butttonDiv = document.createElement('div')
@@ -36,10 +36,10 @@ export let dom = {
             bodyContent.classList.add('row')
 
             Icon.classList.add('fas','fa-caret-down')
-            addButton.classList.add('btn','btn-primary', 'btn-sm')
+            //addButton.classList.add('btn','btn-primary', 'btn-sm')
             minimizeButton.classList.add('btn','btn-primary', 'btn-sm')
-            addButton.textContent = 'Add card'
-            addButton.setAttribute('data-board', board.id)
+            //addButton.textContent = 'Add card'
+            //addButton.setAttribute('data-board', board.id)
             bodyContent.id = 'cardContent'
             body.classList.add('card-body')
             header.classList.add('card-header', 'd-flex', 'justify-content-between')
@@ -54,7 +54,7 @@ export let dom = {
          
             body.append(bodyContent)
 
-            header.append(title,addButton,minimizeButton)
+            header.append(title,minimizeButton)
             boardpanel.append(header,body)
             container.append(boardpanel)
             }
