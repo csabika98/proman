@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = "valami" 
 
 
-
+# add new card 
 @app.route("/new-card/", methods=["GET","POST"])
 def createnewcard():
     list_cards = p.show_cards()
@@ -35,7 +35,7 @@ def createnewcard():
         return redirect("/")
     return render_template("index.html")
 
-
+# add new board
 @app.route("/new-board/", methods=["GET","POST"])
 def createnewboard():
     list_boards = p.show_boards()
@@ -58,7 +58,7 @@ def createnewboard():
     return render_template("index.html")
 
 
-
+# login system
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
