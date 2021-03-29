@@ -3,7 +3,7 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
-        // This function should run once, when the page is loaded.
+
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -38,6 +38,12 @@ export let dom = {
             Icon.classList.add('fas','fa-caret-down')
             //addButton.classList.add('btn','btn-primary', 'btn-sm')
             minimizeButton.classList.add('btn','btn-primary', 'btn-sm')
+            $(minimizeButton).click(function() {
+                $(header).click(function() {
+                    $(this).next().toggle();
+                    return false;
+                }).next().hide();
+              });
             //addButton.textContent = 'Add card'
             //addButton.setAttribute('data-board', board.id)
             bodyContent.id = 'cardContent'

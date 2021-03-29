@@ -1,4 +1,4 @@
-id,title
-1,Board 1
-2,Board 2
-3,Board testing
+id,title,isPrivate
+0,Newly created board,0
+1,Newly created board,0
+63,Newly created board,1

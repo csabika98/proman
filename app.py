@@ -15,26 +15,25 @@ app.secret_key = "valami"
 @app.route("/new-card/", methods=["GET","POST"])
 def createnewcard():
     list_cards = p.show_cards()
-    board_ids = []
-    for board_id in list_cards:
-        board_ids.append(board_id["board_id"])
     ids = []
     for add_cards in list_cards:
         ids.append(add_cards["id"])
+
     new_cards = {}
+
     if request.method == "POST":
-        if len(ids) == 0:
-            new_cards["id"] = "0"
+        if not session:
+            new_cards['board_id'] = '0'
         else:
-            new_cards["id"] = str(int(max(ids)) + 1)
-        new_cards['board_id'] = 1
+            new_cards['board_id'] = session['user_id']
+        new_cards["id"] = str(int(max(ids)) + 1)
         new_cards["title"] = "newlycreatedcard"
         new_cards["status_id"] = 0
         new_cards["order"] = 0
         list_cards.append(new_cards)
         p.write_to_file(list_cards)
         return redirect("/")
-    return render_template("index.html", list_cards=list_cards, board_ids=board_ids)
+    return render_template("index.html")
 
 
 @app.route("/new-board/", methods=["GET","POST"])
@@ -43,16 +42,19 @@ def createnewboard():
     ids = []
     for add_boards in list_boards:
         ids.append(add_boards["id"])
+
     new_boards = {}
     if request.method == "POST":
-        if len(ids) == 0:
-            new_boards["id"] = "0"
-        else:
+        if not session:
             new_boards["id"] = str(int(max(ids)) + 1)
+            new_boards['isPrivate'] = '0'
+        else:
+            new_boards["id"] = session['user_id']
+            new_boards['isPrivate'] = '1'
         new_boards['title'] = "Newly created board"
         list_boards.append(new_boards)
         p.write_to_boards(list_boards)
-        return redirect("/")
+        return redirect(url_for('index'))
     return render_template("index.html")
 
 
@@ -62,6 +64,7 @@ def login():
     if request.method == "POST":
         session.pop("email", None)
         session.pop("password",None)
+        session.pop("user_id",None)
         paswd = request.form["password"]
         email_address = request.form["email"]
         user = d.get_user_by_email_and_pass(email_address, paswd)
@@ -72,6 +75,7 @@ def login():
             for _ in user:
                 session['password'] = _['password']
                 session["email"] = _["email"]
+                session['user_id'] = _['user_id']
             return redirect("/")
         else:
             flash("Login failed: Wrong password or email","red")
@@ -97,6 +101,8 @@ def register_new_account():
 def logout():
     session.pop('email',None)
     session.pop("password", None)
+    session.pop('user_id',None)
+    session.pop('created_on',None)
     flash("You have been successfully logged out!","green")
     return redirect("/")
 
@@ -115,7 +121,19 @@ def get_boards():
     """
     All the boards
     """
-    return data_handler.get_boards()
+    all_board = data_handler.get_boards()
+    if session:
+        my_boards = []
+        for board in all_board:
+            if board['id'] == str(session['user_id']) and board['isPrivate'] == '1':
+                my_boards.append(board)
+        return my_boards
+    else:
+        public_boards = []
+        for board in all_board:
+            if board['isPrivate'] == '0':
+                public_boards.append(board)
+        return public_boards
 
 @app.route("/get-cards")
 @json_response
