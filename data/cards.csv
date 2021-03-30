@@ -1,19 +1,8 @@
 id,board_id,title,status_id,order
-1,1,new card 1,0,0
-2,1,new card 2,0,1
-3,1,in progress card,1,0
-4,1,planning,2,0
-5,1,done card 1,3,0
-6,1,done card 1,3,1
-7,2,new card 1,0,0
-8,2,new card 2,0,1
-9,2,in progress card,1,0
-10,2,planning,2,0
-11,2,done card 1,3,0
-12,2,done card 1,3,1
-10,0,newlycreatedcard,0,0
-10,0,newlycreatedcard,0,0
-10,0,newlycreatedcard,0,0
-10,0,newlycreatedcard,0,0
-10,63,newlycreatedcard,0,0
-10,63,newlycreatedcard,0,0
+0,4,newlycreatedcard,0,0
+1,4,newlycreatedcard,0,0
+2,5,newlycreatedcard,0,0
+3,3,newlycreatedcard,0,0
+4,6,newlycreatedcard,0,0
+5,7,newlycreatedcard,0,0
+6,8,newlycreatedcard,0,0

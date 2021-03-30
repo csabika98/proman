@@ -4,7 +4,7 @@ STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
 CARDS_FILE = './data/cards.csv'
 DATA_HEADER = ["id","board_id","title","status_id","order"]
-DATA_HEADER2=["id","title",'isPrivate']
+DATA_HEADER2=["id","title",'user_id']
 _cache = {}  # We store cached data in this dict to avoid multiple file readings
 
 

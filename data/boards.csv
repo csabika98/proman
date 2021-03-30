@@ -1,4 +1,8 @@
-id,title,isPrivate
-0,Newly created board,0
-1,Newly created board,0
-63,Newly created board,1
+id,title,user_id
+2,Newly created board,63
+3,Newly created board,63
+4,Newly created board,public
+5,Newly created board,public
+6,Newly created board,63
+7,Newly created board,63
+8,Newly created board,public

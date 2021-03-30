@@ -23,16 +23,33 @@ def createnewcard():
 
     if request.method == "POST":
         if not session:
-            new_cards['board_id'] = '0'
+            boards_public = p.show_boards()
+            board_ids_public = []
+            for board in boards_public:
+                if board['user_id'] == 'public':
+                    board_ids_public.append(board['id'])
+            new_cards['board_id'] = board_ids_public[-1]
+            if not ids:
+                new_cards["id"] = 0
+            else:
+                new_cards["id"] = str(int(ids[-1]) + 1)
         else:
-            new_cards['board_id'] = session['user_id']
-        new_cards["id"] = str(int(max(ids)) + 1)
+            boards = p.show_boards()
+            board_ids = []
+            for board in boards:
+                if board['user_id'] == str(session['user_id']):
+                    board_ids.append(board['id'])
+            new_cards['board_id'] = str(board_ids[-1])
+            if not ids:
+                new_cards["id"] = 0
+            else:
+                new_cards["id"] = str(int(ids[-1]) + 1)
         new_cards["title"] = "newlycreatedcard"
         new_cards["status_id"] = 0
         new_cards["order"] = 0
         list_cards.append(new_cards)
         p.write_to_file(list_cards)
-        return redirect("/")
+        return redirect(url_for('index'))
     return render_template("index.html")
 
 # add new board
@@ -46,11 +63,17 @@ def createnewboard():
     new_boards = {}
     if request.method == "POST":
         if not session:
-            new_boards["id"] = str(int(max(ids)) + 1)
-            new_boards['isPrivate'] = '0'
+            if ids:
+                new_boards["id"] = str(int(ids[-1]) + 1)
+            else:
+                new_boards["id"] = 0            
+            new_boards["user_id"] = 'public'
         else:
-            new_boards["id"] = session['user_id']
-            new_boards['isPrivate'] = '1'
+            new_boards["user_id"] = session['user_id']
+            if ids:
+                new_boards["id"] = str(int(ids[-1]) + 1)
+            else:
+                new_boards["id"] = '0'
         new_boards['title'] = "Newly created board"
         list_boards.append(new_boards)
         p.write_to_boards(list_boards)
@@ -125,13 +148,13 @@ def get_boards():
     if session:
         my_boards = []
         for board in all_board:
-            if board['id'] == str(session['user_id']) and board['isPrivate'] == '1':
+            if board['user_id'] == str(session['user_id']):
                 my_boards.append(board)
         return my_boards
     else:
         public_boards = []
         for board in all_board:
-            if board['isPrivate'] == '0':
+            if board['user_id'] == 'public':
                 public_boards.append(board)
         return public_boards
 
