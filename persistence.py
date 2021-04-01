@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
@@ -84,3 +85,4 @@ def show_boards():
             new = dict(row)
             result.append(new)
         return result
+

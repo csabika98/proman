@@ -24,6 +24,21 @@ export let dom = {
             //console.log('board id: ' + board.id)
             //let addButton = document.createElement('button')
             let minimizeButton = document.createElement('button')
+            let renameForm = document.createElement("form")
+            let renameInput = document.createElement("input")
+            let renameSubmit = document.createElement("button")
+            renameSubmit.setAttribute("type", "submit")
+            renameSubmit.setAttribute("value", "Submit")
+            renameSubmit.classList.add("btn","btn-primary")
+            renameSubmit.textContent = "Submit"
+            renameForm.setAttribute("method","post")
+            renameForm.setAttribute("action",`/rename-board/${board.id}`)
+            renameInput.setAttribute("type", "text")
+            renameInput.setAttribute("id", "rename")
+            renameInput.setAttribute("name", "rename")
+            renameSubmit.setAttribute("type", "submit")
+            renameForm.appendChild(renameInput)
+            renameForm.appendChild(renameSubmit)
             let title = document.createElement('div')
             let title_and_butttonDiv = document.createElement('div')
             let Icon = document.createElement('i')
@@ -31,7 +46,28 @@ export let dom = {
             let header = document.createElement('div')
             let body = document.createElement('div')
             let bodyContent = document.createElement('div')
+            let newCard = document.getElementById("addcard")
+            let newForm = document.createElement("form")
+            let newInput = document.createElement("input")
+            let newButton = document.createElement("button")
 
+            newCard.addEventListener("click", function(){
+                newForm.setAttribute("method","post")
+                newForm.setAttribute("action",`/new-card/${board.id}`)
+                newForm.setAttribute("data-board-id",`${board.id}`)
+                newInput.setAttribute("type","text")
+                newInput.setAttribute("id", "newcard")
+                newInput.setAttribute("placeholder", "RENAME BOARD")
+                newInput.setAttribute("board-id", `${board.id}`)
+                newInput.setAttribute("name", "newcard")
+                newButton.setAttribute("type","submit")
+                newButton.classList.add("btn","btn-primary")
+                newButton.textContent = "Submit"
+                newForm.appendChild(newInput)
+                newForm.appendChild(newButton)
+
+
+            })
             
             bodyContent.classList.add('row')
 
@@ -60,8 +96,8 @@ export let dom = {
          
             body.append(bodyContent)
 
-            header.append(title,minimizeButton)
-            boardpanel.append(header,body)
+            header.append(title,minimizeButton,renameForm)
+            boardpanel.append(newForm,header,body)
             container.append(boardpanel)
             }
 

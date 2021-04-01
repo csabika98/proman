@@ -52,8 +52,8 @@
         <a class="nav-link" href="/register">Register</a>
     </nav>
     {%endif%}
-    <form action="/new-card/" style="text-align: center;" method="POST"><button class="btn btn-primary btn sm" type="submit" id = "addcard" name="addcard">Create new card</button></form>
-    <form action="/new-board/" style="text-align: center;" method="POST"><button class="btn btn-primary btn sm" type="submit" id = "addboard" name="addboard">Create new board</button></form>
+    <div class="container text-center"><button class="btn btn-primary btn" type="submit" id = "addcard" name="addcard">Create new card</button>
+    <form action="/new-board/" method="POST"><button class="btn btn-primary btn sm" type="submit" id = "addboard" name="addboard">Create new board</button></form></div>
         <div id="boards"></div>
     </body>
 </html>

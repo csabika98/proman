@@ -6,14 +6,27 @@ import data_manager as d
 import data_handler
 import datetime
 import persistence as p
+import pandas as pd
+BOARDS_FILE = './data/boards.csv'
 
 app = Flask(__name__)
 app.secret_key = "valami" 
 
+@app.route("/rename-board/<int:board_id>", methods=["GET","POST"])
+def rename_board(board_id):
+    df = pd.read_csv(BOARDS_FILE)
+    if request.method == "POST":
+        df["title"][board_id] = request.form["rename"]
+        df.to_csv(BOARDS_FILE, index=False)
+        print(df)
+        return redirect("/")
+    return render_template("index.html", board_id=board_id)
+
+
 
 # add new card 
-@app.route("/new-card/", methods=["GET","POST"])
-def createnewcard():
+@app.route("/new-card/<int:board_id>", methods=["GET","POST"])
+def createnewcard(board_id):
     list_cards = p.show_cards()
     ids = []
     for add_cards in list_cards:
@@ -44,13 +57,14 @@ def createnewcard():
                 new_cards["id"] = 0
             else:
                 new_cards["id"] = str(int(ids[-1]) + 1)
-        new_cards["title"] = "newlycreatedcard"
+        new_cards["title"] = request.form["newcard"]
         new_cards["status_id"] = 0
         new_cards["order"] = 0
+        new_cards["board_id"] = board_id
         list_cards.append(new_cards)
         p.write_to_file(list_cards)
         return redirect(url_for('index'))
-    return render_template("index.html")
+    return render_template("index.html", board_id=board_id)
 
 # add new board
 @app.route("/new-board/", methods=["GET","POST"])
